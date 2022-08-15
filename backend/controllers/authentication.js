@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
         where: { email: req.body.email }
     })
 
-    if (!user || !await bcrypt.compare(req.body.password, user.passwordDigest)) {
+    if (!user || !await bcrypt.compare(req.body.password, user.password_digest)) {
         res.status(404).json({ message: `Could not find a user with the provided username and password` })
     } else {
         const result = await jwt.encode(process.env.JWT_SECRET, { id: user.userId })
